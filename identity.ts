@@ -1,3 +1,13 @@
+function main() {
+  var result = new Identity(1).bind(value =>
+    new Identity(2).bind(value2 => new Identity(value + value2))
+  );
+
+  console.log(result);
+
+  // Identity { value: 3 }
+}
+
 class Identity<T> {
   value: T;
   constructor(value: T) {
@@ -13,8 +23,4 @@ class Identity<T> {
   }
 }
 
-var result = new Identity(1).bind(value =>
-  new Identity(2).bind(value2 => new Identity(value + value2))
-);
-
-console.log(result);
+main();

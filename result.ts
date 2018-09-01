@@ -1,3 +1,30 @@
+function main() {
+  console.log(
+    fetchSuccess("someurl").bind(v => {
+      console.log(v);
+      return new Ok(v);
+    })
+  );
+  // abc
+  // Ok { value: 'abc' }
+
+  console.log(
+    fetchFailure("someurl").bind(v => {
+      console.log(v);
+      return new Ok(v);
+    })
+  );
+  // Error { value: FetchError {} }
+}
+
+function fetchFailure(url: string): Result<string, FetchError> {
+  return new Error(new FetchError());
+}
+
+function fetchSuccess(url: string): Result<string, FetchError> {
+  return new Ok("abc");
+}
+
 abstract class Result<A, E> {
   abstract bind<B, E>(f: ((A) => Result<B, E>)): Result<B, E>;
   abstract toString(): string;
@@ -36,27 +63,5 @@ class Error<A, E> extends Result<A, E> {
 }
 
 class FetchError {}
-
-function main() {
-  console.log(
-    fetchSuccess("someurl").bind(v => {
-      return new Ok(v);
-    })
-  );
-
-  console.log(
-    fetchFailure("someurl").bind(v => {
-      return new Ok(v);
-    })
-  );
-}
-
-function fetchFailure(url: string): Result<string, FetchError> {
-  return new Error(new FetchError());
-}
-
-function fetchSuccess(url: string): Result<string, FetchError> {
-  return new Ok("abc");
-}
 
 main();

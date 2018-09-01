@@ -1,3 +1,35 @@
+function main() {
+  type Address = {
+    street: string;
+    zipcode: Maybe<string>;
+  };
+  type Person = {
+    address: Maybe<Address>;
+  };
+
+  console.log(
+    new Just({
+      address: new Just({
+        street: "Some Street",
+        zipcode: new Just("12345")
+      })
+    })
+      .bind(x => x.address)
+      .bind(x => x.zipcode)
+  );
+
+  console.log(
+    new Just({
+      address: new Nothing()
+    })
+      .bind(x => x.address)
+      .bind(x => x.zipcode)
+  );
+
+  // Just { value: '12345' }
+  // Nothing {}
+}
+
 abstract class Maybe<T> {
   abstract bind<U>(f: ((T) => Maybe<U>)): Maybe<U>;
   abstract toString(): string;
@@ -29,29 +61,4 @@ class Nothing<T> extends Maybe<T> {
   }
 }
 
-type Address = {
-  street: string;
-  zipcode: Maybe<string>;
-};
-type Person = {
-  address: Maybe<Address>;
-};
-
-console.log(
-  new Just({
-    address: new Just({
-      street: "Some Street",
-      zipcode: new Just("12345")
-    })
-  })
-    .bind(x => x.address)
-    .bind(x => x.zipcode)
-);
-
-console.log(
-  new Just({
-    address: new Nothing()
-  })
-    .bind(x => x.address)
-    .bind(x => x.zipcode)
-);
+main();
