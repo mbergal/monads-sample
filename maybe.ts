@@ -1,4 +1,4 @@
-function main() {
+function maybeDemo() {
   type Address = {
     street: string;
     zipcode: Maybe<string>;
@@ -61,4 +61,4 @@ class Nothing<T> extends Maybe<T> {
   }
 }
 
-main();
+maybeDemo();

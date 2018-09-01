@@ -1,4 +1,4 @@
-function main() {
+function resultDemo() {
   console.log(
     fetchSuccess("someurl").bind(v => {
       console.log(v);
@@ -64,4 +64,4 @@ class Error<A, E> extends Result<A, E> {
 
 class FetchError {}
 
-main();
+resultDemo();
