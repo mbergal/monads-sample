@@ -8,12 +8,12 @@ function f(): Reader<Config, string> {
   return g().bind(v => new Reader(() => v + "&bbb"));
 }
 
-function main() {
+function demoReader() {
   const config: Config = { url: "http://news.ycombinator.com" };
   console.log(f().run(config));
 }
 
-class Reader<C, A> {
+class Reader<C, A> implements Monad<A> {
   k: (C) => A;
   constructor(k: (C) => A) {
     this.k = k;
@@ -27,4 +27,4 @@ class Reader<C, A> {
   }
 }
 
-main();
+demoReader();
